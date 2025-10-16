@@ -31,7 +31,7 @@ double HSVolume(int d = 3, int N = 1000, double r = 1){
   float distance2 = 0; // distance squared of point from center
   float CUBE_VOLUME = 1;
   for (int i = 0; i < d; ++i){
-    CUBE_VOLUME *= 2; // each cube length will be 2. So volume is 2 * 2 * 2 * 2 * ... d times.
+    CUBE_VOLUME *= 2 * r; // each cube length will be 2. So volume is 2 * 2 * 2 * 2 * ... d times.
   }
   float SPHERE_VOLUME = 0; // Saving for later on.
   for (int i = 0; i < N; ++i){ // for each point
@@ -43,6 +43,10 @@ double HSVolume(int d = 3, int N = 1000, double r = 1){
     distance2 = 0;
   }
   SPHERE_VOLUME = count * CUBE_VOLUME / N;
+  // two_numbers result;
+  // result.first_number = SPHERE_VOLUME;
+  // result.second_number = count;
+  // return result;
   return SPHERE_VOLUME;
 }
  
