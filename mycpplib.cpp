@@ -1,6 +1,8 @@
 #include "mycpplib.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <cstdint>   // for std::int64_t
+#include <iostream>
 
 // constructor
 Mandel::Mandel(double re1, double re2, double im1, double im2) :
@@ -10,8 +12,6 @@ Mandel::Mandel(double re1, double re2, double im1, double im2) :
   _ni=2000;
   _img=0;
 }
-
-
 
 int Mandel::mandel_test(double c_re, double c_im){  
   // If a point is in the set, its magnitude will remain bounded by
@@ -34,7 +34,6 @@ int Mandel::mandel_test(double c_re, double c_im){
   }
   return counts;
 }
-
 
 // explore the Mandelbrot set
 // we pass the image buffer as a 1D array, and access the pixels
@@ -64,3 +63,14 @@ Mandel::~Mandel(){
   if (_img) delete [] _img;
 }
 
+std::int64_t count3d(int n) {
+  std::int64_t count = 0;                 // use 64-bit to avoid overflow for large n
+  for (int i = 0; i < n; ++i) {
+      for (int j = i + 1; j < n; ++j) {
+          for (int k = j + 1; k < n; ++k) {
+              ++count;
+          }
+      }
+  }
+  return count;
+}

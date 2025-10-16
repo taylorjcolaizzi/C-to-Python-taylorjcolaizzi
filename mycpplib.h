@@ -41,5 +41,7 @@ class Mandel{
   double *_img;  // image buffer
 };
 
+std::int64_t count3d(int n);
+
   
 #endif // block to ensure header is only compiled once
