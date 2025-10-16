@@ -14,13 +14,36 @@ extern "C" {
 // estimate pi from the dart throwing method
 double findPi(long nthrows=100*1000*1000){
   srand48((long)time(NULL));
-  long count=0;
+  long count = 0;
   for (int i=0; i<nthrows; ++i){
-    double x=drand48();
-    double y=drand48();
+    double x = drand48();
+    double y = drand48();
     if (x*x+y*y < 1) ++count;
   }
   return 4.0*count/nthrows;
+}
+
+// estimate the volume of a d-dimensional hypersphere of radius r given N pseudorandom points.
+double HSVolume(int d = 3, int N = 1000, double r = 1){
+  srand48((long)time(NULL)); // Sets the seed to the current time. Keeps it random.
+  long count = 0; // Counts points inside the hyper sphere.
+  float point_store[d]; // make d-dimensional array to hold the random numbers for point
+  float distance2 = 0; // distance squared of point from center
+  float CUBE_VOLUME = 1;
+  for (int i = 0; i < d; ++i){
+    CUBE_VOLUME *= 2; // each cube length will be 2. So volume is 2 * 2 * 2 * 2 * ... d times.
+  }
+  float SPHERE_VOLUME = 0; // Saving for later on.
+  for (int i = 0; i < N; ++i){ // for each point
+    for (int j = 0; j < d; ++j){ // for each dimension
+      point_store[j] = drand48() * 2. - 1.; // drand48() is only from [0.0, 1.0), so we need to stretch it by 2 and subtract it by 1
+      distance2 += point_store[j] * point_store[j]; // maybe shorten this later on. adds the square of the dimension.
+    }
+    if (distance2 < r * r) ++ count; // if magnitude squared is less than r squared, add to the count
+    distance2 = 0;
+  }
+  SPHERE_VOLUME = count * CUBE_VOLUME / N;
+  return SPHERE_VOLUME;
 }
  
 
